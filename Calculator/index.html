@@ -3,67 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" >
-    <title>Calculator</title>
+    <title>Dynamic Calculator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-
-    <div class="calculator">
-        <input type="text" placeholder="0" class="display" id="inputBox">
-        <div class="buttons">
-            <div>
-            <button class="operator" value="+">%</button>
-            <button class="operator">Del</button>
-            <button class="clear">C</button>
-            <button class="equal">=</button>
+    <div class="container">
+        <div class="rules-panel">
+            <h2 style="color: white; margin-bottom: 20px;">Operation Rules</h2>
+            <div class="rules-form">
+                <input type="text" id="operatorInput" placeholder="Operator" maxlength="1">
+                <input type="number" id="precedenceInput" placeholder="Precedence" min="1">
+                <button onclick="addRule()">Add Rule</button>
             </div>
-            <div>
-                <button class="number" value="7">7</button>
-                <button class="number" value="8">8</button>
-                <button class="number" value="9">9</button>
-                <button class="operator" value="+">+</button>
-                
+            <div id="rulesList" class="rules-list"></div>
+        </div>
 
+        <div class="calculator">
+            <input type="text" class="display" id="display" readonly>
+            <div class="buttons">
+                <button onclick="appendCharacter('7')">7</button>
+                <button onclick="appendCharacter('8')">8</button>
+                <button onclick="appendCharacter('9')">9</button>
+                <button onclick="appendCharacter('+')">+</button>
+                <button onclick="appendCharacter('4')">4</button>
+                <button onclick="appendCharacter('5')">5</button>
+                <button onclick="appendCharacter('6')">6</button>
+                <button onclick="appendCharacter('-')">-</button>
+                <button onclick="appendCharacter('1')">1</button>
+                <button onclick="appendCharacter('2')">2</button>
+                <button onclick="appendCharacter('3')">3</button>
+                <button onclick="appendCharacter('*')">*</button>
+                <button onclick="appendCharacter('0')">0</button>
+                <button onclick="appendCharacter('.')">.</button>
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="appendCharacter('/')">/</button>
+                <button onclick="deleteLastChar()">Del</button>
+                <button onclick="appendCharacter('%')">%</button>
+                <button onclick="calculate()" class="equal">=</button>
+                <button onclick="appendCharacter('00')">00</button>
             </div>
-            <div>
-            
-            <button class="number" value="4">4</button>
-            <button class="number" value="5">5</button>
-            <button class="number" value="6">6</button>
-            <button class="operator" value="-">-</button>
-
-            </div>
-            
-            <div>
-            <button class="number" value="1">1</button>
-            <button class="number" value="2">2</button>
-            <button class="number" value="3">3</button>
-            <button class="operator" value="*">*</button>
-
-
-            </div>
-           
-            <div>
-                <button class="number" value=".">.</button>
-                <button class="number" value="0">0</button>
-                <button class="number" value="00">00</button>
-
-                <button class="operator" value="/">/</button>
-
-            </div>
-            
-            <div>
-                <select name="dropDown" id="operationOrder">
-                    <option value="/ * + -">/ * + -</option>
-                    <option value="- + * /">- + * /</option>
-                </select>
-                
-            </div>
-            
-
-
-
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="script.js">
+       
+    </script>
 </body>
 </html>
