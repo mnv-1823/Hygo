@@ -3,7 +3,7 @@ interface Rule {
     precedence: number;
 }
 
-let rules1: Rule[] = [
+let rules: Rule[] = [
     { operator: '+', precedence: 1 },
     { operator: '-', precedence: 1 },
     { operator: '*', precedence: 2 },
@@ -11,12 +11,12 @@ let rules1: Rule[] = [
     { operator: '%', precedence: 2 }
 ];
 
-function updateRulesList1(): void {
+function updateRulesList(): void {
     const rulesList = document.getElementById('rulesList');
     if (!rulesList) return;
     rulesList.innerHTML = '';
     
-    rules1.forEach(rule => {
+    rules.forEach(rule => {
         const ruleElement = document.createElement('div');
         ruleElement.className = 'rule-item';
         ruleElement.innerHTML = `
@@ -30,7 +30,7 @@ function updateRulesList1(): void {
     });
 }
 
-function addRule1(): void {
+function addRule(): void {
     const operatorInput = document.getElementById('operatorInput') as HTMLInputElement;
     const precedenceInput = document.getElementById('precedenceInput') as HTMLInputElement;
     
@@ -39,27 +39,40 @@ function addRule1(): void {
     const operator = operatorInput.value;
     const precedence = parseInt(precedenceInput.value);
     
-    if (operator && precedence && !rules1.find(r => r.operator === operator)) {
-        rules1.push({ operator, precedence });
-        updateRulesList1();
-        operatorInput.value = '';
-        precedenceInput.value = '';
+    let exists = false;
+for (const r of rules) {
+    if (r.operator === operator) {
+        exists = true;
+        break;
     }
 }
 
-function removeRule1(operator: string): void {
-    rules1 = rules1.filter(rule => rule.operator !== operator);
-    updateRulesList1();
+if (operator && precedence && !exists) {
+    rules.push({ operator, precedence });
+    updateRulesList();
+    operatorInput.value = '';
+    precedenceInput.value = '';
 }
 
-function updateRulePrecedence1(operator: string, newPrecedence: string): void {
-    const rule = rules1.find(r => r.operator === operator);
-    if (rule) {
-        rule.precedence = parseInt(newPrecedence);
+}
+
+function removeRule(operator: string): void {
+    rules = rules.filter(rule => rule.operator !== operator);
+    updateRulesList();
+}
+
+function updateRulePrecedence(operator: string, newPrecedence: string): void {
+    const precedenceValue = parseInt(newPrecedence);
+    for (const rule of rules) {
+        if (rule.operator === operator) {
+            rule.precedence = precedenceValue;
+            break;
+        }
     }
+    updateRulesList();
 }
 
-function appendCharacter1(char: string): void {
+function appendCharacter(char: string): void {
     const display = document.getElementById('display') as HTMLInputElement;
     if (!display) return;
     
@@ -70,22 +83,22 @@ function appendCharacter1(char: string): void {
     }
 }
 
-function clearDisplay1(): void {
+function clearDisplay(): void {
     const display = document.getElementById('display') as HTMLInputElement;
     if (display) {
         display.value = '0';
     }
 }
 
-function deleteLastChar1(): void {
+function deleteLastChar(): void {
     const display = document.getElementById('display') as HTMLInputElement;
     if (display) {
         display.value = display.value.slice(0, -1) || '0';
     }
 }
 
-function evaluateExpression1(expression: string): string {
-    const precedence: Record<string, number> = rules1.reduce((acc, rule) => {
+function evaluateExpression(expression: string): string {
+    const precedence: Record<string, number> = rules.reduce((acc, rule) => {
         acc[rule.operator] = rule.precedence;
         return acc;
     }, {} as Record<string, number>);
@@ -143,16 +156,25 @@ function evaluateExpression1(expression: string): string {
     return stack.length === 1 ? stack[0].toString() : 'Error';
 }
 
-function calculate1(): void {
+function calculate(): void {
     const display = document.getElementById('display') as HTMLInputElement;
     if (!display) return;
     
     try {
-        display.value = evaluateExpression1(display.value);
+        display.value = evaluateExpression(display.value);
     } catch (error) {
         display.value = 'Error';
     }
 }
 
+// Make functions available globally for onclick in HTML
+(window as any).addRule = addRule;
+(window as any).removeRule = removeRule;
+(window as any).updateRulePrecedence = updateRulePrecedence;
+(window as any).appendCharacter = appendCharacter;
+(window as any).clearDisplay = clearDisplay;
+(window as any).deleteLastChar = deleteLastChar;
+(window as any).calculate = calculate;
+
 // Initialize rules list
-updateRulesList1();
+updateRulesList();

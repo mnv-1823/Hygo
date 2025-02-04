@@ -24,15 +24,7 @@ function addRule() {
         return;
     var operator = operatorInput.value;
     var precedence = parseInt(precedenceInput.value);
-    var exists = false;
-    for (var _i = 0, rules_1 = rules; _i < rules_1.length; _i++) {
-        var r = rules_1[_i];
-        if (r.operator === operator) {
-            exists = true;
-            break;
-        }
-    }
-    if (operator && precedence && !exists) {
+    if (operator && precedence && !rules.find(function (r) { return r.operator === operator; })) {
         rules.push({ operator: operator, precedence: precedence });
         updateRulesList();
         operatorInput.value = '';
@@ -44,15 +36,11 @@ function removeRule(operator) {
     updateRulesList();
 }
 function updateRulePrecedence(operator, newPrecedence) {
-    var precedenceValue = parseInt(newPrecedence);
-    for (var _i = 0, rules_2 = rules; _i < rules_2.length; _i++) {
-        var rule = rules_2[_i];
-        if (rule.operator === operator) {
-            rule.precedence = precedenceValue;
-            break;
-        }
+    var rule = rules.find(function (r) { return r.operator === operator; });
+    if (rule) {
+        rule.precedence = parseInt(newPrecedence);
+        updateRulesList();
     }
-    updateRulesList();
 }
 function appendCharacter(char) {
     var display = document.getElementById('display');
