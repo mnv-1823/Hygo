@@ -1,0 +1,11 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "description": "Login page",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "manav",
+  "license": "ISC"
+}
