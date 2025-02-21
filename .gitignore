@@ -1,4 +1,5 @@
-
-
-
-Node\node_modules
+# Purpose: Ignore node_modules folder
+# Note: node_modules folder is not included in the repository
+NodeJS/node_modules
+node_modules
+NodeJS/.env
