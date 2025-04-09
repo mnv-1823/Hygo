@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Test route
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Student API' });
+  res.json({ message: 'Welcome to Student API', });
+ res.end('/api/students');
 });
 
 // Mount routes
@@ -30,5 +31,5 @@ connectDB().then(() => {
   });
 }).catch(err => {
   console.error('Failed to connect to database:', err);
-  process.exit(1);
+  process.exit(1);  
 });
